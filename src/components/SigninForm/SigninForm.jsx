@@ -1,9 +1,9 @@
-import { useState } from 'react'
-import { Link, useNavigate } from 'react-router-dom'
-import * as authService from '../../services/authService' // import the authservice
+import { useState } from 'react';
+import { Link, useNavigate } from 'react-router-dom';
+import * as authService from '../../services/authService';
 
 const SigninForm = (props) => {
-  const navigate = useNavigate(); // added this for navigation purposes
+  const navigate = useNavigate();
   const [message, setMessage] = useState(['']);
   const [formData, setFormData] = useState({
     username: '',
@@ -11,60 +11,62 @@ const SigninForm = (props) => {
   });
 
   const updateMessage = (msg) => {
-    setMessage(msg)
+    setMessage(msg);
   };
 
   const handleChange = (e) => {
-    updateMessage('')
-    setFormData({ ...formData, [e.target.name]: e.target.value })
-  }
+    updateMessage('');
+    setFormData({ ...formData, [e.target.name]: e.target.value });
+  };
 
   const handleSubmit = async (e) => {
-    e.preventDefault()
+    e.preventDefault();
     try {
-      const user = await authService.signin(formData) // getting the user
-      console.log(user)
+      const user = await authService.signin(formData);
+      console.log(user);
       props.setUser(user);
-      navigate('/')
+      navigate('/');
     } catch (err) {
-      updateMessage(err.message)
+      updateMessage(err.message);
     }
-  }
+  };
 
   return (
     <main>
       <h1>Log In</h1>
       <p>{message}</p>
-      <form autoComplete='off' onSubmit={handleSubmit}>
+      <form autoComplete="off" onSubmit={handleSubmit}>
         <div>
-          <label htmlFor='email'>Username:</label>
+          <label htmlFor="email">Username:</label>
           <input
-            type='text'
-            autoComplete='off'
-            id='username'
+            type="text"
+            autoComplete="off"
+            id="username"
             value={formData.username}
-            name='username'
+            name="username"
             onChange={handleChange}
           />
         </div>
         <div>
-          <label htmlFor='password'>Password:</label>
+          <label htmlFor="password">Password:</label>
           <input
-            type='password'
-            autoComplete='off'
-            id='password'
+            type="password"
+            autoComplete="off"
+            id="password"
             value={formData.password}
-            name='password'
+            name="password"
             onChange={handleChange}
           />
         </div>
         <div>
           <button>Log In</button>
-          <Link to='/'><button>Cancel</button></Link>
+          <Link to="/">
+            <button>Cancel</button>
+          </Link>
         </div>
       </form>
     </main>
-  )
-}
+  );
+};
 
-export default SigninForm
+export default SigninForm;
